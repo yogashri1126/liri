@@ -20,7 +20,24 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
 });
 
 }
-if (process.argv[2]==="spotify-this-song"){}
+if (process.argv[2]==="spotify-this-song"){
+
+var Spotify = require('spotify-api');
+ 
+var spotify = new Spotify{
+  id: "783cd04e45ad495b9ba619a79da80d81",
+  secret: "21d3f08418864e3dbb94746ac0e5f316"
+};
+ 
+spotify.search({ type: 'track', query: process.argv[3] }, function(err, data) {
+  if (err) {
+    return console.log('Error occurred: ' + err);
+  }
+ 
+console.log(data); 
+});
+}
+
 if (process.argv[2]==="movie-this" && process.argv.length>3){
 
 	// Include the request npm package (Don't forget to run "npm install request" in this folder first!)
