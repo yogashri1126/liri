@@ -1,7 +1,7 @@
 //var access= require("./keys.js")
 var searchomdb = ""
 var searchrotten = ""
-var songz= ""
+var songz = ""
 
 if (process.argv[2] === "my-tweets") {
 
@@ -48,7 +48,10 @@ if (process.argv[2] === "spotify-this-song" && process.argv.length > 3) {
             return console.log('Error occurred: ' + err);
         }
 
-        console.log(data);
+        console.log("Artist be like:" + " " + data.tracks.items[0].artists[0].name);
+        console.log("Song name:" + " " + data.tracks.items[0].name);
+        console.log("Link:" + " " + data.tracks.items[0].album.href);
+        console.log("Album:" + " " + data.tracks.items[0].album.name);
     });
 }
 
@@ -69,7 +72,10 @@ if (process.argv[2] === "spotify-this-song" && process.argv.length === 3) {
             return console.log('Error occurred: ' + err);
         }
 
-        console.log(JSON.stringify(data));
+        console.log("Artist be like:" + " " + data.tracks.items[0].artists[0].name);
+        console.log("Song name:" + " " + data.tracks.items[0].name);
+        console.log("Link:" + " " + data.tracks.items[0].album.href);
+        console.log("Album:" + " " + data.tracks.items[0].album.name);
     });
 
 }
@@ -172,7 +178,10 @@ if (process.argv[2] === "do-what-it-says") {
                     return console.log('Error occurred: ' + err);
                 }
 
-                console.log(JSON.stringify(data));
+                console.log("Artist be like:" + " " + data.tracks.items[0].artists[0].name);
+                console.log("Song name:" + " " + data.tracks.items[0].name);
+                console.log("Link:" + " " + data.tracks.items[0].album.href);
+                console.log("Album:" + " " + data.tracks.items[0].album.name);
             });
 
         }
