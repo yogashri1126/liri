@@ -1,17 +1,19 @@
 //var access= require("./keys.js")
 var searchomdb = ""
 var searchrotten = ""
+var songz= ""
 
 if (process.argv[2] === "my-tweets") {
 
     var access = require("./keys.js")
+    var Twitter = require("twitter")
 
-    var client = access.twitterKeys
-    console.log(client);
+    var client = new Twitter(access.twitterKeys)
 
     var params = {
         screen_name: 'YogashriPradhan'
     };
+
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
         if (!error) {
             console.log(tweets);
@@ -22,17 +24,25 @@ if (process.argv[2] === "my-tweets") {
     });
 
 }
-if (process.argv[2] === "spotify-this-song") {
+if (process.argv[2] === "spotify-this-song" && process.argv.length > 3) {
 
-    var Spotify = require('./node_modules/spotify-api');
+    for (i = 3; i < process.argv.length; i++) {
 
-    var spotify = new Spotify()
-    Spotify.id = "783cd04e45ad495b9ba619a79da80d81"
-    Spotify.secret = "21d3f08418864e3dbb94746ac0e5f316";
+        songz = songz + process.argv[i] + " ";
+    }
+
+    console.log(songz)
+
+    var Spotify = require("node-spotify-api");
+
+    var spotify = new Spotify({
+        id: "783cd04e45ad495b9ba619a79da80d81",
+        secret: "21d3f08418864e3dbb94746ac0e5f316"
+    })
 
     spotify.search({
         type: 'track',
-        query: process.argv[3]
+        query: songz
     }, function(err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
@@ -40,6 +50,28 @@ if (process.argv[2] === "spotify-this-song") {
 
         console.log(data);
     });
+}
+
+if (process.argv[2] === "spotify-this-song" && process.argv.length === 3) {
+
+    var Spotify = require("node-spotify-api");
+
+    var spotify = new Spotify({
+        id: "783cd04e45ad495b9ba619a79da80d81",
+        secret: "21d3f08418864e3dbb94746ac0e5f316"
+    })
+
+    spotify.search({
+        type: 'track',
+        query: 'The Sign by Ace of Base'
+    }, function(err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
+
+        console.log(JSON.stringify(data));
+    });
+
 }
 
 if (process.argv[2] === "movie-this" && process.argv.length > 3) {
@@ -107,17 +139,44 @@ console.log(searchomdb);
 console.log(searchrotten);
 
 
-if (process.argv[2] === "do-what-it-says") { 
-// Includes the FS package for reading and writing packages
+if (process.argv[2] === "do-what-it-says") {
+    // Includes the FS package for reading and writing packages
     var fs = require("fs");
 
     // Running the readFile module that's inside of fs.
     // Stores the read information into the variable "data"
     fs.readFile("random.txt", "utf8", function(err, data) {
-            if (err) {
-                return console.log(err);
+        if (err) {
+            return console.log(err);
+        }
+
+        if (data.includes("spotify-this-song")) {
+            var doIT = ""
+            for (j = 18; j < data.length; j++) {
+
+                doIT = doIT + data[j]
             }
 
-            console.log(data)
+            var Spotify = require("node-spotify-api");
+
+            var spotify = new Spotify({
+                id: "783cd04e45ad495b9ba619a79da80d81",
+                secret: "21d3f08418864e3dbb94746ac0e5f316"
+            })
+
+            spotify.search({
+                type: 'track',
+                query: doIT
+            }, function(err, data) {
+                if (err) {
+                    return console.log('Error occurred: ' + err);
+                }
+
+                console.log(JSON.stringify(data));
+            });
+
         }
-    }
+
+
+    })
+}

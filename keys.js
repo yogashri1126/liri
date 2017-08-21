@@ -1,5 +1,6 @@
 console.log('this is loaded');
 
+var twitter= require("twitter")
 exports.twitterKeys = {
   consumer_key: 'Anq3rFoJ5RULeNOyU3XicNwRk',
   consumer_secret: '8Jrmu2nCkWYNURgeAnQdeNCYOlY6vMEPKpocqrFjk1L5UwtgY2',
